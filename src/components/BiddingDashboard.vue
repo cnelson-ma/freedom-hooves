@@ -4,6 +4,7 @@
       <b-row>
         <b-col>
           <h3 class="mb-4">Bid</h3>
+          <p>High bid for current horse: ${{ form.highBidMin }}</p>
           <form @submit="createBid" @reset="onReset" v-if="show">
             <b-input-group prepend="$" append=".00" class="mb-4">
               <b-form-input v-model="form.amount" :state="!$v.form.amount.$invalid"></b-form-input>
@@ -64,10 +65,16 @@ export default {
       leaderBoard: [],
       form: {
         amount: '',
-        selectedHorse: '',
+        selectedHorse: 'dazzle',
+        highBidMin: 1,
       },
       show: true,
     };
+  },
+  watch: {
+    'form.selectedHorse': function(newHorse, oldHorse) {
+      this.fetchHighBid(newHorse);
+    },
   },
   firestore() {
     return {
@@ -90,20 +97,19 @@ export default {
       this.show = false;
       this.$nextTick(() => { this.show = true; });
     },
+    fetchHighBid(horse) {
+      const self = this;
+      const bidsRef = db.collection('bids');
+      const horsesRef = db.collection('horses').doc(horse);
+      const query = bidsRef.where('horse', '==', horsesRef).orderBy('createdAt', 'desc').limit(1);
+      query.get().then(function (querySnapshot) {
+        querySnapshot.forEach((doc) => {
+          self.form.highBidMin = doc.data().amount;
+        });
+      });
+    },
   },
   computed: {
-    highBid() {
-      const bidsRef = db.collection('bids');
-      const horsesRef = db.collection('horses').doc(this.form.selectedHorse);
-      const query = bidsRef.where('horse', '==', horsesRef);
-      let highBidValue;
-      if (query) {
-        highBidValue = query;
-      } else {
-        highBidValue = 1;
-      }
-      return highBidValue;
-    },
     horseOptions() {
       const horseOptions = [];
       for (let i = 0; i < this.horses.length; i += 1) {
@@ -121,17 +127,22 @@ export default {
   mixins: [
     validationMixin,
   ],
-  validations: {
-    form: {
-      amount: {
-        required,
-        between: between(1, 10000000),
-        //minValue: minValue(this.highBid),
+  validations() {
+    return {
+      form: {
+        amount: {
+          required,
+          between: between(1, 10000000),
+          minValue: minValue(this.form.highBidMin),
+        },
+        selectedHorse: {
+          required,
+        },
       },
-      selectedHorse: {
-        required,
-      },
-    },
+    };
+  },
+  beforeMount() {
+    this.fetchHighBid(this.form.selectedHorse);
   },
 };
 </script>

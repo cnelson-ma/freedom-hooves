@@ -13,6 +13,7 @@
 
 <script>
 import moment from 'moment';
+import { db } from '../main';
 
 export default {
   props: {
@@ -48,5 +49,5 @@ export default {
 };
 </script>
 <style>
-  
+
 </style>
