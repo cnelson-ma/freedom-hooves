@@ -1,6 +1,6 @@
 <template>
   <div class="bidding">
-    <BiddingDashboard msg="Welcome to Your Vue.js App"/>
+    <BiddingDashboard/>
   </div>
 </template>
 

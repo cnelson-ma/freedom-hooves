@@ -44,6 +44,7 @@ export default {
   methods: {
     removeBid(id) {
       db.collection('bids').doc(id).delete();
+      this.$emit('deletebid');
     },
   },
 };

@@ -4,21 +4,21 @@
       <b-row>
         <b-col>
           <h3 class="mb-4">Bid</h3>
-          <p>High bid for current horse: ${{ form.highBidMin }}</p>
+          <p>High bid for current horse: ${{ form.highBidMin - 1 }}</p>
           <form @submit="createBid" @reset="onReset" v-if="show">
+            <b-form-group>
+              <b-form-radio-group
+              id="lotSelectButtons"
+              buttons
+              button-variant="outline-primary"
+              :options="lotOptions"
+              v-model="form.selectedLot"
+              :state="!$v.form.selectedLot.$invalid">
+              </b-form-radio-group>
+            </b-form-group>
             <b-input-group prepend="$" append=".00" class="mb-4">
               <b-form-input v-model="form.amount" :state="!$v.form.amount.$invalid"></b-form-input>
             </b-input-group>
-            <b-form-group>
-              <b-form-radio-group
-              id="horseSelectButtons"
-              buttons
-              button-variant="outline-primary"
-              :options="horseOptions"
-              v-model="form.selectedHorse"
-              :state="!$v.form.selectedHorse.$invalid">
-              </b-form-radio-group>
-            </b-form-group>
             <div v-if="$v.$invalid">
               <b-button type="submit" variant="success" class="btn-block" disabled="disabled">BID</b-button>
             </div>
@@ -37,7 +37,7 @@
         <b-col>
           <h3 class="mb-4">History</h3>
           <div class="scroll-table">
-            <bid-log :bids="bids" />
+            <bid-log :bids="bids" v-on:deletebid="fetchHighBid(form.selectedLot)" />
           </div>
         </b-col>
       </b-row>
@@ -60,65 +60,73 @@ export default {
 
   data() {
     return {
-      horses: [],
+      lotCollection: 'horses',
+      bidCollection: 'bids',
+      lots: [],
       bids: [],
       leaderBoard: [],
       form: {
         amount: '',
-        selectedHorse: 'dazzle',
+        selectedLot: '',
         highBidMin: 1,
       },
       show: true,
     };
   },
   watch: {
-    'form.selectedHorse': function(newHorse, oldHorse) {
-      this.fetchHighBid(newHorse);
+    'form.selectedLot': function (newLot, oldLot) {
+      this.fetchHighBid(newLot);
     },
   },
   firestore() {
     return {
-      horses: db.collection('horses').orderBy('order'),
-      bids: db.collection('bids').orderBy('createdAt', 'desc'),
+      lots: db.collection(this.lotCollection).orderBy('order'),
+      bids: db.collection(this.bidCollection).orderBy('createdAt', 'desc'),
     };
   },
   methods: {
     createBid(evt) {
       evt.preventDefault();
       const createdAt = Date.now();
-      db.collection('bids').add({ amount: this.form.amount, createdAt, horse: db.doc(`/horses/${this.form.selectedHorse}`) });
+      db.collection(this.bidCollection).add({
+        amount: this.form.amount,
+        createdAt,
+        horse: db.collection(this.lotCollection).doc(this.form.selectedLot),
+      });
+      this.fetchHighBid(this.form.selectedLot);
     },
     onReset(evt) {
       evt.preventDefault();
       /* Reset our form values */
       this.form.amount = '';
-      this.form.selectedHorse = '';
+      this.form.selectedLot = '';
+      this.form.highBidMin = '';
       /* Trick to reset/clear native browser form validation state */
       this.show = false;
       this.$nextTick(() => { this.show = true; });
     },
-    fetchHighBid(horse) {
+    fetchHighBid(lot) {
       const self = this;
-      const bidsRef = db.collection('bids');
-      const horsesRef = db.collection('horses').doc(horse);
-      const query = bidsRef.where('horse', '==', horsesRef).orderBy('createdAt', 'desc').limit(1);
+      const bidsRef = db.collection(this.bidCollection);
+      const lotRef = db.collection(this.lotCollection).doc(lot);
+      const query = bidsRef.where('horse', '==', lotRef).orderBy('createdAt', 'desc').limit(1);
       query.get().then(function (querySnapshot) {
         querySnapshot.forEach((doc) => {
-          self.form.highBidMin = doc.data().amount;
+          self.form.highBidMin = Number(doc.data().amount) + 1;
         });
       });
     },
   },
   computed: {
-    horseOptions() {
-      const horseOptions = [];
-      for (let i = 0; i < this.horses.length; i += 1) {
-        horseOptions[i] = {
-          value: this.horses[i].id,
-          text: this.horses[i].name,
+    lotOptions() {
+      const lotOptions = [];
+      for (let i = 0; i < this.lots.length; i += 1) {
+        lotOptions[i] = {
+          value: this.lots[i].id,
+          text: this.lots[i].name,
         };
       }
-      return horseOptions;
+      return lotOptions;
     },
   },
   components: {
@@ -135,14 +143,11 @@ export default {
           between: between(1, 10000000),
           minValue: minValue(this.form.highBidMin),
         },
-        selectedHorse: {
+        selectedLot: {
           required,
         },
       },
     };
-  },
-  beforeMount() {
-    this.fetchHighBid(this.form.selectedHorse);
   },
 };
 </script>
