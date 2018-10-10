@@ -91,7 +91,7 @@ export default {
       db.collection(this.bidCollection).add({
         amount: this.form.amount,
         createdAt,
-        horse: db.collection(this.lotCollection).doc(this.form.selectedLot),
+        lot: db.collection(this.lotCollection).doc(this.form.selectedLot),
       });
       this.fetchHighBid(this.form.selectedLot);
     },
@@ -109,11 +109,15 @@ export default {
       const self = this;
       const bidsRef = db.collection(this.bidCollection);
       const lotRef = db.collection(this.lotCollection).doc(lot);
-      const query = bidsRef.where('horse', '==', lotRef).orderBy('createdAt', 'desc').limit(1);
+      const query = bidsRef.where('lot', '==', lotRef).orderBy('createdAt', 'desc').limit(1);
       query.get().then(function (querySnapshot) {
-        querySnapshot.forEach((doc) => {
-          self.form.highBidMin = Number(doc.data().amount) + 1;
-        });
+        if (querySnapshot.docs.length > 0) {
+          querySnapshot.forEach((doc) => {
+            self.form.highBidMin = Number(doc.data().amount) + 1;
+          });
+        } else {
+          self.form.highBidMin = 1;
+        }
       });
     },
   },

@@ -41,7 +41,7 @@ export default {
       self.lots.forEach((lot, i) => {
         const bidsRef = db.collection(this.bidCollection);
         const lotRef = db.collection(this.lotCollection).doc(lot.id);
-        const query = bidsRef.where('horse', '==', lotRef).orderBy('createdAt', 'desc').limit(1);
+        const query = bidsRef.where('lot', '==', lotRef).orderBy('createdAt', 'desc').limit(1);
         query.get().then(function (querySnapshot) {
           querySnapshot.forEach((doc) => {
             self.leaderBoard[i] = {

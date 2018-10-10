@@ -23,7 +23,7 @@ export default {
   },
   data() {
     return {
-      bidFields: ['horse', 'amount', 'placed', 'tools'],
+      bidFields: ['lot', 'amount', 'placed', 'tools'],
     };
   },
   computed: {
@@ -32,7 +32,7 @@ export default {
       for (let i = 0; i < this.bids.length; i += 1) {
         const formattedDate = moment(this.bids[i].createdAt).format('LTS');
         bidItems[i] = {
-          horse: this.bids[i].horse.name,
+          lot: this.bids[i].lot.name,
           amount: `$${this.bids[i].amount}.00`,
           placed: formattedDate,
           id: this.bids[i].id,
