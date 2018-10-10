@@ -59,7 +59,7 @@ export default {
 
   data() {
     return {
-      lotCollection: 'horses',
+      lotCollection: 'lots',
       bidCollection: 'bids',
       lots: [],
       bids: [],

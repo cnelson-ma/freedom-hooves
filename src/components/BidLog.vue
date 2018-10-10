@@ -33,7 +33,7 @@ export default {
         const formattedDate = moment(this.bids[i].createdAt).format('LTS');
         bidItems[i] = {
           lot: this.bids[i].lot.name,
-          amount: `$${this.bids[i].amount}.00`,
+          amount: `$${this.bids[i].amount}`,
           placed: formattedDate,
           id: this.bids[i].id,
         };
