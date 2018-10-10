@@ -4,7 +4,6 @@
       <b-row>
         <b-col>
           <h3 class="mb-4">Bid</h3>
-          <p>High bid for current horse: ${{ form.highBidMin - 1 }}</p>
           <form @submit="createBid" @reset="onReset" v-if="show">
             <b-form-group>
               <b-form-radio-group
@@ -68,7 +67,6 @@ export default {
       form: {
         amount: '',
         selectedLot: '',
-        highBidMin: 1,
       },
       show: true,
     };
@@ -105,21 +103,6 @@ export default {
       this.show = false;
       this.$nextTick(() => { this.show = true; });
     },
-    fetchHighBid(lot) {
-      const self = this;
-      const bidsRef = db.collection(this.bidCollection);
-      const lotRef = db.collection(this.lotCollection).doc(lot);
-      const query = bidsRef.where('lot', '==', lotRef).orderBy('createdAt', 'desc').limit(1);
-      query.get().then(function (querySnapshot) {
-        if (querySnapshot.docs.length > 0) {
-          querySnapshot.forEach((doc) => {
-            self.form.highBidMin = Number(doc.data().amount) + 1;
-          });
-        } else {
-          self.form.highBidMin = 1;
-        }
-      });
-    },
   },
   computed: {
     lotOptions() {
@@ -145,7 +128,7 @@ export default {
         amount: {
           required,
           between: between(1, 10000000),
-          minValue: minValue(this.form.highBidMin),
+          minValue: 1,
         },
         selectedLot: {
           required,
