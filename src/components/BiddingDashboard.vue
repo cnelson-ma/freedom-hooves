@@ -10,7 +10,7 @@
               id="lotSelectButtons"
               buttons
               button-variant="outline-primary"
-              :options="lotOptions"
+              :options="lotOptionArray"
               v-model="form.selectedLot"
               :state="!$v.form.selectedLot.$invalid">
               </b-form-radio-group>
@@ -19,7 +19,9 @@
               <b-form-input v-model="form.amount" :state="!$v.form.amount.$invalid"></b-form-input>
             </b-input-group>
             <div v-if="$v.$invalid">
-              <b-button type="submit" variant="success" class="btn-block" disabled="disabled">BID</b-button>
+              <b-button type="submit" variant="success" class="btn-block" disabled="disabled">
+                BID
+              </b-button>
             </div>
             <div v-else>
               <b-button type="submit" variant="success" class="btn-block">BID</b-button>
@@ -36,7 +38,7 @@
         <b-col>
           <h3 class="mb-4">History</h3>
           <div class="scroll-table">
-            <bid-log :bids="bids" v-on:deletebid="fetchHighBid(form.selectedLot)" />
+            <bid-log :bids="$store.state.bids" />
           </div>
         </b-col>
       </b-row>
@@ -51,19 +53,15 @@
 <script>
 import { validationMixin } from 'vuelidate';
 import { required, between, minValue } from 'vuelidate/lib/validators';
-import { db } from '../main';
 import BidLog from './BidLog.vue';
+
+const fb = require('../firebaseConfig.js');
 
 export default {
   name: 'BiddingDashboard',
 
   data() {
     return {
-      lotCollection: 'lots',
-      bidCollection: 'bids',
-      lots: [],
-      bids: [],
-      leaderBoard: [],
       form: {
         amount: '',
         selectedLot: '',
@@ -71,48 +69,36 @@ export default {
       show: true,
     };
   },
-  watch: {
-    'form.selectedLot': function (newLot, oldLot) {
-      this.fetchHighBid(newLot);
-    },
-  },
-  firestore() {
-    return {
-      lots: db.collection(this.lotCollection).orderBy('order'),
-      bids: db.collection(this.bidCollection).orderBy('createdAt', 'desc'),
-    };
-  },
   methods: {
     createBid(evt) {
       evt.preventDefault();
       const createdAt = Date.now();
-      db.collection(this.bidCollection).add({
+      fb.bidsCollection.add({
         amount: this.form.amount,
         createdAt,
-        lot: db.collection(this.lotCollection).doc(this.form.selectedLot),
+        lot: fb.lotsCollection.doc(this.form.selectedLot),
       });
-      this.fetchHighBid(this.form.selectedLot);
+      // this.fetchHighBid(this.form.selectedLot);
     },
     onReset(evt) {
       evt.preventDefault();
       /* Reset our form values */
       this.form.amount = '';
       this.form.selectedLot = '';
-      this.form.highBidMin = '';
       /* Trick to reset/clear native browser form validation state */
       this.show = false;
       this.$nextTick(() => { this.show = true; });
     },
   },
   computed: {
-    lotOptions() {
+    lotOptionArray() {
       const lotOptions = [];
-      for (let i = 0; i < this.lots.length; i += 1) {
-        lotOptions[i] = {
-          value: this.lots[i].id,
-          text: this.lots[i].name,
-        };
-      }
+      this.$store.state.lots.forEach((lot) => {
+        const lotOption = lot;
+        lotOption.value = lot.id;
+        lotOption.text = lot.name;
+        lotOptions.push(lotOption);
+      });
       return lotOptions;
     },
   },

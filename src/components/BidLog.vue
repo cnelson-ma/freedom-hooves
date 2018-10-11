@@ -4,6 +4,7 @@
       <template slot="tools" slot-scope="row">
         <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
         <b-button size="sm" @click.stop="removeBid(row.item.id)">
+
          <font-awesome-icon icon="trash"/>
         </b-button>
       </template>
@@ -13,7 +14,9 @@
 
 <script>
 import moment from 'moment';
-import { db } from '../main';
+import { mapActions } from 'vuex';
+
+const fb = require('../firebaseConfig.js');
 
 export default {
   props: {
@@ -28,27 +31,29 @@ export default {
   },
   computed: {
     bidItems() {
-      const bidItems = [];
-      for (let i = 0; i < this.bids.length; i += 1) {
-        const formattedDate = moment(this.bids[i].createdAt).format('LTS');
-        bidItems[i] = {
-          lot: this.bids[i].lot.name,
-          amount: `$${this.bids[i].amount}`,
-          placed: formattedDate,
-          id: this.bids[i].id,
-        };
-      }
-      return bidItems;
+      const bidArray = [];
+      this.bids.forEach((bid) => {
+        const formattedDate = moment(bid.createdAt).format('LTS');
+        const bidItem = {};
+        bidItem.lot = bid.lot.id;
+        bidItem.amount = `$${bid.amount}`;
+        bidItem.placed = formattedDate;
+        bidItem.id = bid.id;
+        bidArray.push(bidItem);
+      });
+      return bidArray;
     },
   },
   methods: {
+    ...mapActions({
+      removeBidFromStore: 'removeBid',
+    }),
     removeBid(id) {
-      db.collection('bids').doc(id).delete();
+      this.removeBidFromStore(id);
       this.$emit('deletebid');
     },
   },
 };
 </script>
 <style>
-
 </style>
