@@ -1,0 +1,64 @@
+[debug] [2018-10-10T21:41:29.710Z] ----------------------------------------------------------------------
+[debug] [2018-10-10T21:41:29.712Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\CNelson.MCCURDYAUCTION\AppData\Roaming\npm\node_modules\firebase-tools\bin\firebase init functions
+[debug] [2018-10-10T21:41:29.712Z] CLI Version:   4.2.1
+[debug] [2018-10-10T21:41:29.712Z] Platform:      win32
+[debug] [2018-10-10T21:41:29.713Z] Node Version:  v8.9.1
+[debug] [2018-10-10T21:41:29.713Z] Time:          Wed Oct 10 2018 16:41:29 GMT-0500 (Central Daylight Time)
+[debug] [2018-10-10T21:41:29.713Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-10-10T21:41:29.725Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase"]
+[debug] [2018-10-10T21:41:29.726Z] > authorizing via signed-in user
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\CNelson.MCCURDYAUCTION\Projects\firebase\freedomDerby
+
+Before we get started, keep in mind:
+
+  * You are initializing in an existing Firebase project directory
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] but for now we'll just set up a default project.
+[info] 
+[debug] [2018-10-10T21:41:41.953Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-10-10T21:41:41.954Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+
+[debug] [2018-10-10T21:41:42.114Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-10T21:41:42.120Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects  
+ 
+[debug] [2018-10-10T21:41:42.597Z] <<< HTTP RESPONSE 200
+[info] i  .firebaserc already has a default project, skipping
+[info] 
+=== Functions Setup
+[info] 
+[info] A functions directory will be created in your project with a Node.js
+[info] package pre-configured. Functions can be deployed with firebase deploy.
+[info] 
+[debug] [2018-10-10T21:41:42.598Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-10-10T21:41:42.599Z] > authorizing via signed-in user
+[debug] [2018-10-10T21:41:42.600Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-10-10T21:41:42.600Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+
+[debug] [2018-10-10T21:41:42.734Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-10T21:41:42.740Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/freedom-derby  
+ 
+[debug] [2018-10-10T21:41:42.929Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-10T21:41:42.933Z] >>> HTTP REQUEST PATCH https://servicemanagement.googleapis.com/v1/services/cloudfunctions.googleapis.com/projectSettings/freedom-derby?updateMask=usageSettings  
+
+[debug] [2018-10-10T21:41:42.934Z] >>> HTTP REQUEST PATCH https://servicemanagement.googleapis.com/v1/services/runtimeconfig.googleapis.com/projectSettings/freedom-derby?updateMask=usageSettings  
+
+[debug] [2018-10-10T21:41:43.761Z] <<< HTTP RESPONSE 200
+[debug] [2018-10-10T21:41:44.182Z] <<< HTTP RESPONSE 200
+[info] i  Skipping write of functions/package.json
+[info] i  Skipping write of functions/.eslintrc.json
+[info] i  Skipping write of functions/index.js
