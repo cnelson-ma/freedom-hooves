@@ -52,7 +52,7 @@
 
 <script>
 import { validationMixin } from 'vuelidate';
-import { required, between, minValue } from 'vuelidate/lib/validators';
+import { required, between } from 'vuelidate/lib/validators';
 import BidLog from './BidLog.vue';
 
 const fb = require('../firebaseConfig.js');
@@ -114,7 +114,6 @@ export default {
         amount: {
           required,
           between: between(1, 10000000),
-          minValue: 1,
         },
         selectedLot: {
           required,
