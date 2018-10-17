@@ -66,6 +66,7 @@ export default {
         amount: '',
         selectedLot: '',
       },
+      selectedLotTotal: null,
       show: true,
     };
   },
@@ -77,7 +78,12 @@ export default {
         amount: this.form.amount,
         createdAt,
         lot: fb.lotsCollection.doc(this.form.selectedLot),
-      });
+      })
+      .then((docRef) => {
+        const lotTotalAmount = this.lotTotalAmount(this.form.amount, this.form.selectedLot)
+        fb.lotsCollection.doc(this.form.selectedLot)
+        .update({ total: lotTotalAmount })
+      })
       // this.fetchHighBid(this.form.selectedLot);
     },
     onReset(evt) {
@@ -89,6 +95,15 @@ export default {
       this.show = false;
       this.$nextTick(() => { this.show = true; });
     },
+    lotTotalAmount(amount, lot) {
+      let total = parseInt(amount)
+      const self = this
+      fb.lotsCollection.doc(lot).get()
+      .then((doc) => {
+        self.selectedLotTotal = doc.data().total
+      })
+      return total + self.selectedLotTotal
+    }
   },
   computed: {
     lotOptionArray() {
