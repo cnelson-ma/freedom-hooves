@@ -1,7 +1,7 @@
 <template>
-  <div class="list-container">
-    <LotCard v-for="lot in lots" :lotName="lot.name" :amount="lot.total" />
-  </div>
+  <b-row class="list-container">
+    <LotCard v-for="lot in lots" :lotName="lot.name" :amount="lot.total" :lotId="lot.id" />
+  </b-row >
 </template>
 
 <script>
@@ -21,11 +21,8 @@ export default {
 </script>
 
 <style>
-  .list-container {
-    margin: 80px auto;
-    display: grid;
-    grid-template-columns: 200px 200px 200px 200px;
-    grid-gap: 30px;
-    justify-content: center;
-  }
+.list-container {
+  margin-right: 40px;
+  margin-left: 40px;
+}
 </style>
