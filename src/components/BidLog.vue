@@ -3,7 +3,7 @@
     <b-table striped hover :items="bidItems" :fields="bidFields">
       <template slot="tools" slot-scope="row">
         <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
-        <b-button size="sm" @click.stop="removeBid(row.item.id)">
+        <b-button size="sm" @click.stop="removeBid(row.item)">
 
          <font-awesome-icon icon="trash"/>
         </b-button>
@@ -46,8 +46,8 @@ export default {
     ...mapActions({
       removeBidFromStore: 'removeBid',
     }),
-    removeBid(id) {
-      this.removeBidFromStore(id);
+    removeBid(bid) {
+      this.removeBidFromStore(bid);
       this.$emit('deletebid');
     },
   },

@@ -23,8 +23,13 @@ export const store = new Vuex.Store({ // eslint-disable-line
       commit('setBids', []);
       commit('setLots', []);
     },
-    removeBid(context, id) {
-      fb.bidsCollection.doc(id).delete();
+    removeBid(context, bid) {
+      fb.bidsCollection.doc(bid.id).delete()
+      .then(() => {
+        const lot = context.getters.getLotById(bid.lot)
+        let newTotal = lot.total - parseInt(bid.amount.substr(1))
+        fb.lotsCollection.doc(bid.lot).update({ total: newTotal });
+      })
     },
   },
   getters: {
