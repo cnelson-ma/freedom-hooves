@@ -5,7 +5,7 @@
         {{ lotName }}
       </div>
       <div class="card-amount">
-        {{ amount }}$
+        ${{ amount }}
       </div>
     </div>
   </div>

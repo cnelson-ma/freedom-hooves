@@ -1,6 +1,6 @@
 <template>
   <div class="list-container">
-    <LotCard v-for="lot in lots" :lotName="lot.name" :amount="lot.amount" />
+    <LotCard v-for="lot in lots" :lotName="lot.name" :amount="lot.total" />
   </div>
 </template>
 
@@ -14,36 +14,7 @@ export default {
   },
   data() {
     return {
-      lots: [
-        {
-          name: 'Honey Bee',
-          amount: '5000',
-        },
-        {
-          name: 'Honey Bee',
-          amount: '5000',
-        },
-        {
-          name: 'Honey Bee',
-          amount: '5000',
-        },
-        {
-          name: 'Honey Bee',
-          amount: '5000',
-        },
-        {
-          name: 'Honey Bee',
-          amount: '5000',
-        },
-        {
-          name: 'Honey Bee',
-          amount: '5000',
-        },
-        {
-          name: 'Honey Bee',
-          amount: '5000',
-        },
-      ],
+      lots: this.$store.state.lots,
     };
   },
 };
