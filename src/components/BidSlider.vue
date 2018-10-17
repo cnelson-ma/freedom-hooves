@@ -13,29 +13,29 @@
 </template>
 
 <script>
-  export default {
-    name: "BidSlider",
-    props: {
-      fillColor: {
-        type: String,
-        default: '00e7fc'
-      },
-      initialWidth: {
-        type: String,
-        default: '0'
-      },
-      initialAmount: {
-        type: Number,
-        default: 0
-      }
+export default {
+  name: 'BidSlider',
+  props: {
+    fillColor: {
+      type: String,
+      default: '00e7fc',
     },
-    data () {
-      return {
-        amount: this.initialAmount,
-        coloredWidth: this.initialWidth,
-      }
+    initialWidth: {
+      type: String,
+      default: '0',
     },
-  }
+    initialAmount: {
+      type: Number,
+      default: 0,
+    },
+  },
+  data() {
+    return {
+      amount: this.initialAmount,
+      coloredWidth: this.initialWidth,
+    };
+  },
+};
 </script>
 
 <style>

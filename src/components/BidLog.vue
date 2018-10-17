@@ -16,8 +16,6 @@
 import moment from 'moment';
 import { mapActions } from 'vuex';
 
-const fb = require('../firebaseConfig.js');
-
 export default {
   props: {
     bids: {

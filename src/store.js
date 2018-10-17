@@ -28,7 +28,7 @@ export const store = new Vuex.Store({ // eslint-disable-line
     },
   },
   getters: {
-
+    getLotById: state => id => state.lots.find(lot => lot.id == id),
   },
 });
 
@@ -49,6 +49,8 @@ fb.lotsCollection.orderBy('order', 'desc').onSnapshot((querySnapshot) => {
   querySnapshot.forEach((doc) => {
     const lot = doc.data();
     lot.id = doc.id;
+    lot.name = doc.data().name;
+    lot.total = doc.data().total;
     lotsArray.push(lot);
   });
   store.commit('setLots', lotsArray);

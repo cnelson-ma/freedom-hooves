@@ -5,47 +5,48 @@
 </template>
 
 <script>
-import LotCard from './LotCard'
-  export default {
-    name: "LotCardList",
-    components: {
-      LotCard,
-    },
-    data () {
-      return {
-        lots: [
-          {
-            name: "Honey Bee",
-            amount: "5000"
-          },
-          {
-            name: "Honey Bee",
-            amount: "5000"
-          },
-          {
-            name: "Honey Bee",
-            amount: "5000"
-          },
-          {
-            name: "Honey Bee",
-            amount: "5000"
-          },
-          {
-            name: "Honey Bee",
-            amount: "5000"
-          },
-          {
-            name: "Honey Bee",
-            amount: "5000"
-          },
-          {
-            name: "Honey Bee",
-            amount: "5000"
-          },
-        ]
-      }
-    }
-  }
+import LotCard from './LotCard.vue';
+
+export default {
+  name: 'LotCardList',
+  components: {
+    LotCard,
+  },
+  data() {
+    return {
+      lots: [
+        {
+          name: 'Honey Bee',
+          amount: '5000',
+        },
+        {
+          name: 'Honey Bee',
+          amount: '5000',
+        },
+        {
+          name: 'Honey Bee',
+          amount: '5000',
+        },
+        {
+          name: 'Honey Bee',
+          amount: '5000',
+        },
+        {
+          name: 'Honey Bee',
+          amount: '5000',
+        },
+        {
+          name: 'Honey Bee',
+          amount: '5000',
+        },
+        {
+          name: 'Honey Bee',
+          amount: '5000',
+        },
+      ],
+    };
+  },
+};
 </script>
 
 <style>

@@ -12,21 +12,21 @@
 </template>
 
 <script>
-  export default {
-    name: "LotCard",
-    props: {
-      lotName: {
-        type: String,
-        required: true,
-        default: ''
-      },
-      amount: {
-        type: String,
-        required: true,
-        default: ''
-      }
-    }
-  }
+export default {
+  name: 'LotCard',
+  props: {
+    lotName: {
+      type: String,
+      required: true,
+      default: '',
+    },
+    amount: {
+      type: String,
+      required: true,
+      default: '',
+    },
+  },
+};
 </script>
 
 <style>

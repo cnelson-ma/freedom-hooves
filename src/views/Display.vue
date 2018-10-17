@@ -11,18 +11,18 @@
 </template>
 
 <script>
-import LotCardList from '../components/LotCardList'
+import LotCardList from '../components/LotCardList.vue';
 // @ is an alias to /src
 
 export default {
   name: 'display',
   components: {
-    LotCardList
+    LotCardList,
   },
-  data () {
+  data() {
     return {
-      show: false
-    }
+      show: false,
+    };
   },
 };
 </script>

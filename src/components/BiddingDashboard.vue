@@ -66,7 +66,6 @@ export default {
         amount: '',
         selectedLot: '',
       },
-      selectedLotTotal: null,
       show: true,
     };
   },
@@ -79,11 +78,10 @@ export default {
         createdAt,
         lot: fb.lotsCollection.doc(this.form.selectedLot),
       })
-      .then((docRef) => {
-        const lotTotalAmount = this.lotTotalAmount(this.form.amount, this.form.selectedLot)
-        fb.lotsCollection.doc(this.form.selectedLot)
-        .update({ total: lotTotalAmount })
-      })
+        .then((docRef) => {
+          const lotTotal = this.lotTotalAmount(this.form.amount, this.form.selectedLot);
+          fb.lotsCollection.doc(this.form.selectedLot).update({ total: lotTotal });
+        });
       // this.fetchHighBid(this.form.selectedLot);
     },
     onReset(evt) {
@@ -96,20 +94,16 @@ export default {
       this.$nextTick(() => { this.show = true; });
     },
     lotTotalAmount(amount, lot) {
-      let total = parseInt(amount)
-      const self = this
-      fb.lotsCollection.doc(lot).get()
-      .then((doc) => {
-        self.selectedLotTotal = doc.data().total
-      })
-      return total + self.selectedLotTotal
-    }
+      const total = parseInt(amount, 0);
+      const currentLot = this.$store.getters.getLotById(lot);
+      return total + currentLot.total;
+    },
   },
   computed: {
     lotOptionArray() {
       const lotOptions = [];
       this.$store.state.lots.forEach((lot) => {
-        const lotOption = lot;
+        const lotOption = {};
         lotOption.value = lot.id;
         lotOption.text = lot.name;
         lotOptions.push(lotOption);
