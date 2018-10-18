@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Display</router-link> |
+      <router-link to="/">Display</router-link>
       <router-link to="/bidding">Bidding</router-link>
     </div>
     <router-view/>
@@ -10,22 +10,23 @@
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
 }
 #nav {
-  padding: 30px;
+  padding: 0;
+  height: 20px;
+  text-align: center;
 }
 
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #fff;
+  width: 40%;
+  text-align: center;
+  display: inline-block;
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+#nav a:hover {
+  color: #000;
 }
 </style>

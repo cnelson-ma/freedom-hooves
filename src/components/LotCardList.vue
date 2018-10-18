@@ -45,6 +45,7 @@ export default {
     box-shadow: 0px 3px 12px rgba(0,0,0,0.2);
     margin-top: 104px;
     border: 1px solid #206D64;
+    text-align: center;
   }
   .card-image {
     height: 208px;
