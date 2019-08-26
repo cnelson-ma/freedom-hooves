@@ -32,3 +32,15 @@ new Vue({
   store,
   render: h => h(App),
 }).$mount('#app');
+
+Vue.filter('toCurrency', (value) => {
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+  });
+  if (typeof value !== 'number') {
+    return value;
+  }
+  return formatter.format(value);
+});

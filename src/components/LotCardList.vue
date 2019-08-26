@@ -9,7 +9,7 @@
           </span>
         </div>
         <div class="card-amount">
-          ${{ lot.total }}
+          {{ lot.total | toCurrency }}
         </div>
       </div>
     </b-col>
