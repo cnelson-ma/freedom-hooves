@@ -78,7 +78,7 @@ export default {
         createdAt,
         lot: fb.lotsCollection.doc(this.form.selectedLot),
       })
-        .then((docRef) => {
+        .then(() => {
           const lotTotal = this.lotTotalAmount(this.form.amount, this.form.selectedLot);
           fb.lotsCollection.doc(this.form.selectedLot).update({ total: lotTotal });
         });

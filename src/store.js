@@ -12,9 +12,11 @@ export const store = new Vuex.Store({ // eslint-disable-line
   },
   mutations: {
     setBids(state, val) {
+      // eslint-disable-next-line
       state.bids = val;
     },
     setLots(state, val) {
+      // eslint-disable-next-line
       state.lots = val;
     },
   },
@@ -25,15 +27,15 @@ export const store = new Vuex.Store({ // eslint-disable-line
     },
     removeBid(context, bid) {
       fb.bidsCollection.doc(bid.id).delete()
-      .then(() => {
-        const lot = context.getters.getLotById(bid.lot)
-        let newTotal = lot.total - parseInt(bid.amount.substr(1))
-        fb.lotsCollection.doc(bid.lot).update({ total: newTotal });
-      })
+        .then(() => {
+          const lot = context.getters.getLotById(bid.lot);
+          const newTotal = lot.total - parseInt(bid.amount.substr(1), 10);
+          fb.lotsCollection.doc(bid.lot).update({ total: newTotal });
+        });
     },
   },
   getters: {
-    getLotById: state => id => state.lots.find(lot => lot.id == id),
+    getLotById: state => id => state.lots.find(lot => lot.id === id),
   },
 });
 

@@ -1,6 +1,6 @@
 <template>
   <b-row class="list-container">
-    <b-col cols="3" v-for="lot in lots">
+    <b-col cols="3" v-for="lot in lots" :key="lot.id">
       <div class="card-container">
         <img class="card-image" v-bind:src="'/images/' + lot.id + '.jpg'">
         <div class="card-title">

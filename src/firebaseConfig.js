@@ -14,12 +14,6 @@ const firebaseApp = firebase.initializeApp({
 // firebase utils
 const db = firebaseApp.firestore();
 
-// date issue fix according to firebase
-const settings = {
-  timestampsInSnapshots: true,
-};
-db.settings(settings);
-
 // firebase collections
 const bidsCollection = db.collection('bids');
 const lotsCollection = db.collection('lots');
