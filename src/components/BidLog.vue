@@ -1,10 +1,9 @@
 <template>
   <div>
     <b-table striped hover :items="bidItems" :fields="bidFields">
-      <template slot="tools" slot-scope="row">
+      <template v-slot:cell(tools)="data">
         <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
-        <b-button size="sm" @click.stop="removeBid(row.item)">
-
+        <b-button size="sm" @click.stop="removeBid(data.item)">
          <font-awesome-icon icon="trash"/>
         </b-button>
       </template>

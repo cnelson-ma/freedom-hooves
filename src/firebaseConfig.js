@@ -3,12 +3,12 @@ import 'firebase/firestore';
 
 // firebase init goes here
 const firebaseApp = firebase.initializeApp({
-  apiKey: 'AIzaSyBVE31-qgb76NSyCWn5WrzMtEDYwDgbgxE',
-  authDomain: 'freedom-derby.firebaseapp.com',
-  databaseURL: 'https://freedom-derby.firebaseio.com/',
-  projectId: 'freedom-derby',
-  storageBucket: 'freedom-derby.appspot.com',
-  messagingSenderId: '1038574637211',
+  apiKey: 'AIzaSyDaZWqbMLcX0GalwxXjyJYJ4ZKQb1Q3k70',
+  authDomain: 'houndrace-4a14f.firebaseapp.com',
+  databaseURL: 'https://houndrace-4a14f.firebaseio.com/',
+  projectId: 'houndrace-4a14f',
+  storageBucket: 'houndrace-4a14f.appspot.com',
+  messagingSenderId: '45616596464',
 });
 
 // firebase utils
