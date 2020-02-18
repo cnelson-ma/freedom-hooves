@@ -1,7 +1,10 @@
 <template>
   <div class="slider-container">
     <div class="slider-bar">
-      <div class="color-fill" v-bind:style="{ backgroundColor: '#' + fillColor, width: coloredWidth + '%' }">
+      <div
+        class="color-fill"
+        v-bind:style="{ backgroundColor: '#' + fillColor, width: coloredWidth + '%' }"
+      >
         <div class="slide-marker">
           <div class="amount-label">${{ amount }}</div>
         </div>

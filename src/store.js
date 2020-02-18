@@ -35,7 +35,7 @@ export const store = new Vuex.Store({ // eslint-disable-line
     },
   },
   getters: {
-    getLotById: state => id => state.lots.find(lot => lot.id === id),
+    getLotById: (state) => (id) => state.lots.find((lot) => lot.id === id),
   },
 });
 
